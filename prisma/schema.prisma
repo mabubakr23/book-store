@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Book {
+  id            String   @id @default(uuid())
+  title         String
+  authorList    String[]
+  genreList     String[]
+  sellPrice     Float
+  stockPrice    Float
+  borrowPrice   Float
+  publishedYear Int
+  pageCount     Int
+  publisher     String
+  isbn          String   @unique
+  currentCopies Int
+  initialStock  Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  actions   BookAction[]
+  userBooks UserBook[]
+
+  @@index([title])
+  @@index([isbn])
+  @@index([publisher])
+  @@index([publishedYear])
+}
+
+model Wallet {
+  id              Int                 @id @default(1)
+  balance         Float
+  isMilestoneSent Boolean             @default(false)
+  transactions    WalletTransaction[]
+}
+
+model WalletTransaction {
+  id        String   @id @default(uuid())
+  type      String
+  amount    Float
+  reason    String
+  createdAt DateTime @default(now())
+
+  walletId Int
+  wallet   Wallet @relation(fields: [walletId], references: [id])
+}
+
+model BookAction {
+  id         String     @id @default(uuid())
+  userEmail  String
+  actionType ActionType
+  createdAt  DateTime   @default(now())
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
+}
+
+model UserBook {
+  id         String     @id @default(uuid())
+  userEmail  String
+  actionType ActionType
+  quantity   Int
+  createdAt  DateTime   @default(now())
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id])
+}
+
+enum ActionType {
+  BORROW
+  RETURN
+  BUY
+  STOCK
+}

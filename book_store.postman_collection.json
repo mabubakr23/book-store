@@ -1,0 +1,292 @@
+{
+  "info": {
+    "_postman_id": "c6d29d7e-6e62-4f81-b9fb-8579af71cbd8",
+    "name": "Book Store",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "14763406"
+  },
+  "item": [
+    {
+      "name": "Book",
+      "item": [
+        {
+          "name": "Search books",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var template = `\r",
+                  "<style type=\"text/css\">\r",
+                  "    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+                  "    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+                  "    .tftable tr {background-color:#ffffff;}\r",
+                  "    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+                  "    .tftable tr:hover {background-color:#e0ffff;}\r",
+                  "</style>\r",
+                  "\r",
+                  "<table class=\"tftable\" border=\"1\">\r",
+                  "    <tr>\r",
+                  "        <th>Title</th>\r",
+                  "        <th>Authors</th>\r",
+                  "        <th>Genres</th>\r",
+                  "        <th>Sell Price</th>\r",
+                  "        <th>Stock Price</th>\r",
+                  "        <th>Borrow Price</th>\r",
+                  "        <th>Year</th>\r",
+                  "        <th>Pages</th>\r",
+                  "        <th>Publisher</th>\r",
+                  "        <th>ISBN</th>\r",
+                  "        <th>Copies</th>\r",
+                  "        <th>Initial Stock</th>\r",
+                  "        <th>Created At</th>\r",
+                  "        <th>Updated At</th>\r",
+                  "    </tr>\r",
+                  "    \r",
+                  "    {{#each response}}\r",
+                  "        <tr>\r",
+                  "            <td>{{title}}</td>\r",
+                  "            <td>{{authors}}</td>\r",
+                  "            <td>{{genres}}</td>\r",
+                  "            <td>{{sellPrice}}</td>\r",
+                  "            <td>{{stockPrice}}</td>\r",
+                  "            <td>{{borrowPrice}}</td>\r",
+                  "            <td>{{year}}</td>\r",
+                  "            <td>{{pages}}</td>\r",
+                  "            <td>{{publisher}}</td>\r",
+                  "            <td>{{isbn}}</td>\r",
+                  "            <td>{{copies}}</td>\r",
+                  "            <td>{{initialStock}}</td>\r",
+                  "            <td>{{createdAt}}</td>\r",
+                  "            <td>{{updatedAt}}</td>\r",
+                  "        </tr>\r",
+                  "    {{/each}}\r",
+                  "</table>\r",
+                  "`;\r",
+                  "\r",
+                  "function constructVisualizerPayload() {\r",
+                  "    return {response: pm.response.json()}\r",
+                  "}\r",
+                  "\r",
+                  "pm.visualizer.set(template, constructVisualizerPayload());"
+                ],
+                "type": "text/javascript",
+                "packages": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "admin@dummy-library.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/admin/book?search=Fiction",
+              "host": ["{{hostName}}"],
+              "path": ["admin", "book"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "Fiction"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch Book by id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "admin@dummy-library.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/admin/book/b0930bef-50af-4e53-aa62-94eb19d2bd9c",
+              "host": ["{{hostName}}"],
+              "path": ["admin", "book", "b0930bef-50af-4e53-aa62-94eb19d2bd9c"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Book logs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "admin@dummy-library.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/admin/book/logs?type=borrow",
+              "host": ["{{hostName}}"],
+              "path": ["admin", "book", "logs"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "borrow"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Book summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "admin@dummy-library.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/admin/book/users",
+              "host": ["{{hostName}}"],
+              "path": ["admin", "book", "users"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "wallets",
+      "item": [
+        {
+          "name": "Wallet status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "admin@dummy-library.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/admin/wallet/balance",
+              "host": ["{{hostName}}"],
+              "path": ["admin", "wallet", "balance"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Wallet Transactions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "admin@dummy-library.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/admin/wallet/transactios",
+              "protocol": "http",
+              "host": ["{{hostName}}"],
+              "path": ["admin", "wallet", "transactios"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "transactions",
+      "item": [
+        {
+          "name": "Borrow  the book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "m.abuabkr3758@gmail.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/transactions/borrow/9c219d3e-21c1-472c-a72a-42aae7f24fe4",
+              "host": ["{{hostName}}"],
+              "path": [
+                "transactions",
+                "borrow",
+                "9c219d3e-21c1-472c-a72a-42aae7f24fe4"
+              ],
+              "query": [
+                {
+                  "key": "bookId",
+                  "value": null,
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buy the Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "m.abuabkr3758@gmail.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/transactions/purchase/9c219d3e-21c1-472c-a72a-42aae7f24fe4",
+              "host": ["{{hostName}}"],
+              "path": [
+                "transactions",
+                "purchase",
+                "9c219d3e-21c1-472c-a72a-42aae7f24fe4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Return Book",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "x-user-email",
+                "value": "m.abuabkr3758@gmail.com",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{hostName}}/transactions/return/9c219d3e-21c1-472c-a72a-42aae7f24fe4",
+              "host": ["{{hostName}}"],
+              "path": [
+                "transactions",
+                "return",
+                "9c219d3e-21c1-472c-a72a-42aae7f24fe4"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
